@@ -1,11 +1,33 @@
 const mongoose = require('mongoose');
 
-const urlSchema = new mongoose.Schema({
-  shortId: { type: String, required: true, unique:true },
-  redirectURL: { type: String, required: true },
-  visitHistory: [{ timestamps : {type : Number} }]
-},{timestamps: true});
+const userSchema = new mongoose.Schema({
+  name : {
+    type : String, require : true
+  },
+  email : {
+    type : String, require : true, unique : true
+  },
+  address :{
+    type : String, default: '',
+  },
 
-const URL = mongoose.model('url', urlSchema);
+  skills : {
+    type :[{
+      name: {type : String, default: '',}, rating: {type : Number, default: '', min: 1, max : 5}
+    }], require
+  },
+  language: {
+    type: String,
+  },
+  hobbies: {
+    type: String,
+    default: '',
+  },
+  password : {
+    type : String, require : true
+  },
+}, {timestamps: true})
 
-module.exports = {URL};
+const User = mongoose.model('user', userSchema)
+
+module.exports = User

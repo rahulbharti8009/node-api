@@ -1,7 +1,11 @@
 const mongoose = require('mongoose');
 
-async function connectMongoDb(params = 'mongodb://127.0.0.1:27017/rb') {
-    return mongoose.connect(params)
+async function connectMongoDb(params) {
+     mongoose.connect(params).then(async()=> {
+        console.log("Server is connected");
+    }).catch(()=> {
+        console.log("Connection is failed");
+    })
 }
 
 module.exports = {

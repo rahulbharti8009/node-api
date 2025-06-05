@@ -1,9 +1,9 @@
-const express = require('express');
-const { getHomeHtml } = require('../controller/html.controller');
-const { URL } = require('../models/url.model');
-const router = express.Router()
+const express = require('express')
 
+const   router = express.Router();
 
-router.get("/",getHomeHtml)
+router.get('/signup', async(req, res)=> {
+   return res.render('signup')
+})
 
-module.exports = router
+module.exports = router;

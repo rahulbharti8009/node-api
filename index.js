@@ -6,9 +6,10 @@ const userRouter = require('./routes/user');
 const staticRouter = require('./routes/staticRouter')
 const { logReqRes } = require('./middlewares');
 const PORT = 8001;const path = require('path')
+const cookieParser = require('cookie-parser');
+app.use(cookieParser());
 
-
-connectMongoDb('mongodb://127.0.0.1:27017/authentication')
+connectMongoDb('mongodb://127.0.0.1:27017/jwt')
 
 app.use(express.json())
 app.use(express.urlencoded({extended :  false}))

@@ -15,8 +15,9 @@
   </style>
 </head>
 <body>
-
-       <h1> SignUp</h1>
+<% if (locals.name) { %>
+  <h1><%= name %> SignUp</h1>
+<% } %>
        <form method = "POST" action="/api/signup">
         <label>Enter your origin URL</label>
         <input type="text" name="name" placeholder="name" />

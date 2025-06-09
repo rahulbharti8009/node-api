@@ -1,4 +1,5 @@
-const fs = require('fs')
+const fs = require('fs');
+const { getUser } = require('../services/auth');
 
 function logReqRes(filename){
     return (req, res, next)=> {
@@ -13,6 +14,29 @@ function logReqRes(filename){
     }
 }
 
+ function hadleTokenMiddleware() {
+    return async(req, res, next)=> {
+        console.log("I am a  token middleware")
+       const authToken =  req.headers["authorization"]
+       if (!authToken || !authToken.startsWith("Bearer")) {
+        console.log(" No token")
+        return next()
+       }
+       console.log(`authToken ${authToken}`)
+       const token = authToken.split(" ")[1];
+       const tokenVerify = await getUser(token)
+       console.log(`${JSON.stringify(tokenVerify)}`)
+       
+       if (tokenVerify != null) {
+        console.log(`Token is currect`)
+        return next()
+       }
+       console.log(`Please enter valid token`)
+       return res.status(200).json({status : false ,message :"Please enter valid token"})
+    }
+}
+
 module.exports = {
-    logReqRes
+    logReqRes,
+    hadleTokenMiddleware
 }

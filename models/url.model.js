@@ -14,7 +14,7 @@ const userSchema = new mongoose.Schema({
   skills : {
     type :[{
       name: {type : String, default: '',}, rating: {type : Number, default: '', min: 1, max : 5}
-    }], require
+    }],
   },
   language: {
     type: String,
@@ -27,6 +27,8 @@ const userSchema = new mongoose.Schema({
     type : String, require : true
   },
   token:{type : String, default : ''}, 
+  role:{type : String, default : ''}, 
+
 }, {timestamps: true})
 
 const User = mongoose.model('user', userSchema)

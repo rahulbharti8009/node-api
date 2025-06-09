@@ -6,7 +6,13 @@ async function setUser(user) {
 }
 
 async function getUser(token){
-    return jwt.verify(token, secret)
+    console.log(`token ${token}`)
+    if (!token) return null
+    try{
+    return jwt.verify(token, secret)    
+    } catch(error){
+        return null
+    }
 }
 
 module.exports = {getUser, setUser}

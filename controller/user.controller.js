@@ -1,3 +1,4 @@
+const Test = require("../models/test.model");
 const User = require("../models/url.model");
 const { setUser, getUser } = require("../services/auth");
 
@@ -13,12 +14,11 @@ async function userCreate(req, res) {
     if(!isValidEmail(email)) return res.status(200).json({status : true ,message :"Please enter valid email address."})
 
     const user = await User.findOne({ email: email });
-    console.log(user)
     if(user) return res.status(200).json({ status: true, message: "Email already registered" });
-
+ 
     const token = await setUser({"name": name, "email": email, "password": password})
     console.log("token" , token)
-    res.cookie("token", token.toString())  
+    res.cookie("token", token.toString()) 
 
     await User.create({
         name : name, email: email, address:address, skills: skills, language:language, hobbies:hobbies, password : password, token : token
@@ -48,4 +48,16 @@ async function getLogin(req, res) {
     }
 } 
 
-module.exports = {userCreate, getLogin}
+async function getTest(req, res) {
+    try{
+        const test = await Test.find({});
+        if(test){
+            return res.status(200).json({status : true ,message :"Success", value: test})
+        }
+        return res.status(200).json({status : false ,message :"No user exist.", value: []})
+    } catch(err){
+        return res.status(400).json({status : true ,message : err.message})
+    }
+} 
+
+module.exports = {userCreate, getLogin , getTest}

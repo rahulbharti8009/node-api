@@ -3,6 +3,8 @@ const User = require("../models/user.model");
 const { setUser, getUser } = require("../services/auth");
 const multer  = require('multer')
 const path = require('path');
+const fs = require('fs');
+
 const storage = multer.diskStorage({
     destination: function (req, file, cb) {
       cb(null, 'uploads'); // relative path without slash
@@ -56,7 +58,6 @@ async function userCreate(req, res) {
         }
 } 
 
-
 async function getLogin(req, res) {
     const {email, password} = req.body
     try{
@@ -86,13 +87,14 @@ async function getTest(req, res) {
     }
 } 
 
-
-
-
-
 // 
 async function userCreateUser (req, res) {
     upload.single('profile')(req, res, async function (err) {
+
+// Create uploads folder if not present
+if (!fs.existsSync('uploads')) {
+    fs.mkdirSync('uploads');
+    }
        
       if (err instanceof multer.MulterError) {
         // Multer-specific errors

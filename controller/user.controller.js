@@ -23,8 +23,8 @@ async function userCreate(req, res) {
     await User.create({
         name : name, email: email, address:address, skills: skills, language:language, hobbies:hobbies, password : password, token : token
     })
-
-    return res.status(201).json({status : true ,message :"Success "})
+       
+        return res.status(201).json({status : true ,message :"Success "})
         } catch (err) {
             res.status(500).json({ error: "Internal server error" });
         }

@@ -1,14 +1,13 @@
 const mongoose = require('mongoose');
-const Test = require('../models/test.model');
+const fs = require('fs');
 
 async function connectMongoDb(params) {
      mongoose.connect(params).then(async()=> {
         console.log("Server is connected");
-        for(let i = 0 ; i < 1000; i++){
-              Test.create({
-                name : "nn+"+i
-            })
-        }
+         // Create uploads folder if not present
+         if (!fs.existsSync('uploads')) {
+            fs.mkdirSync('uploads');
+            }
     }).catch(()=> {
         console.log("Connection is failed");
     })

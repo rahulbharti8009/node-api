@@ -19,7 +19,7 @@ function logReqRes(filename){
         console.log("I am a  token middleware")
        const authToken =  req.headers["authorization"]
        if (!authToken || !authToken.startsWith("Bearer")) {
-        console.log(" No token")
+        console.log("hadleTokenMiddleware"," No token")
         return next()
        }
        console.log(`authToken ${authToken}`)

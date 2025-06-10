@@ -18,8 +18,9 @@
 <% if (locals.name) { %>
   <h1><%= name %> SignUp</h1>
 <% } %>
-       <form method = "POST" action="/api/signup">
-        <label>Enter your origin URL</label>
+       <form method = "POST" action="/api/upload" enctype="multipart/form-data">
+        <input type="file" name="avatar" placeholder="file" />
+
         <input type="text" name="name" placeholder="name" />
         <input type="text" name="email" placeholder="email" />
         <input type="text" name="password" placeholder="password" />

@@ -85,11 +85,6 @@ async function getTest(req, res) {
         return res.status(400).json({status : true ,message : err.message})
     }
 } 
-
-
-
-
-
 // 
 async function userCreateUser (req, res) {
     upload.single('profile')(req, res, async function (err) {

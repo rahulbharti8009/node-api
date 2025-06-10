@@ -10,7 +10,9 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());
 
-connectMongoDb('mongodb+srv://root:root@cluster0.4xulazt.mongodb.net/cv?retryWrites=true&w=majority&appName=Cluster0')
+connectMongoDb('mongodb://127.0.0.1:27017/cv')
+// connectMongoDb('mongodb+srv://root:root@cluster0.4xulazt.mongodb.net/cv?retryWrites=true&w=majority&appName=Cluster0')
+// 
 
 app.use(express.json())
 app.use(express.urlencoded({extended :  false}))
@@ -23,7 +25,7 @@ app.set('views', path.resolve("./views"))
 // end server side
 
 app.use('/api', userRouter)
-// app.use('/', staticRouter)
+app.use('/', staticRouter)
 
 app.listen(PORT, ()=> {console.log(`Server is ruuning on port ${PORT}`)})
 

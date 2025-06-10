@@ -397,3 +397,4 @@
 1749543261795 ::1: GET /api/user/sas@gma;il.com
 1749543313030 ::1: GET /api/user/sas@gma;il.com
 1749543322517 ::1: GET /api/user/sas@gma;il.comkk
+1749543532721 ::1: POST /api/signup

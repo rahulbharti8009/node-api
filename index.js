@@ -4,13 +4,13 @@ const { connectMongoDb } = require('./connection/connection');
 const userRouter = require('./routes/user');
 const staticRouter = require('./routes/staticRouter')
 const { logReqRes, hadleTokenMiddleware } = require('./middlewares');
-const PORT = 8001;
+const PORT =  process.env.PORT || 8001;
 
 const path = require('path');
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());
 
-connectMongoDb('mongodb://127.0.0.1:27017/cv')
+connectMongoDb('mongodb+srv://root:root@cluster0.4xulazt.mongodb.net/cv?retryWrites=true&w=majority&appName=Cluster0')
 
 app.use(express.json())
 app.use(express.urlencoded({extended :  false}))

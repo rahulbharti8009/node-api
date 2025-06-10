@@ -24,10 +24,12 @@ const userSchema = new mongoose.Schema({
     default: '',
   },
   password : {
-    type : String, require : true
+    type : String, default : ''
   },
   token:{type : String, default : ''}, 
   role:{type : String, default : ''}, 
+  profile:{type : String, default : ''}, 
+
 
 }, {timestamps: true})
 

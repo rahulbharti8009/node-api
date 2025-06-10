@@ -10,7 +10,7 @@ const path = require('path');
 const cookieParser = require('cookie-parser');
 app.use(cookieParser());
 
-connectMongoDb('mongodb://127.0.0.1:27017/file')
+connectMongoDb('mongodb://127.0.0.1:27017/cv')
 
 app.use(express.json())
 app.use(express.urlencoded({extended :  false}))
@@ -23,10 +23,7 @@ app.set('views', path.resolve("./views"))
 // end server side
 
 app.use('/api', userRouter)
-app.use('/', staticRouter)
-
-
-
+// app.use('/', staticRouter)
 
 app.listen(PORT, ()=> {console.log(`Server is ruuning on port ${PORT}`)})
 

@@ -199,7 +199,7 @@ async function getLoginApi(req, res) {
 }
 
 async function addProject(req, res) {
-  upload.array("images[]", 10)(req, res, async function (err) {
+  upload.array("images", 10)(req, res, async function (err) {
     if (err) {
       return res
         .status(500)

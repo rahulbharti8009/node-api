@@ -69,7 +69,12 @@ const userSchema = new mongoose.Schema(
       type: [
         {
           name: { type: String, default: "" },
-          rating: { type: Number, default: "", min: 1, max: 5 },
+          data: {
+            type : [{
+                name : {type : String, default : ''}, 
+                rating: { type: Number, default: "", min: 1, max: 10 },
+            }]
+          }
         },
       ],
     },

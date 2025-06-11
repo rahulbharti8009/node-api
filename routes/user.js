@@ -1,5 +1,5 @@
 const express = require('express')
-const { userCreate, getLogin, getTest, userCreateUser, getLoginApi } = require('../controller/user.controller')
+const { userCreate, getLogin, getTest, userCreateUser, getLoginApi, addProject } = require('../controller/user.controller')
 
 const router = express.Router()// storage config
 
@@ -9,9 +9,6 @@ const router = express.Router()// storage config
 router.get('/user/:email',getLoginApi)
 
 router.post('/signup', userCreateUser);
-
-
-
-
+router.post('/addproject', addProject);
 
 module.exports = router

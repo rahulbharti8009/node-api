@@ -1,12 +1,14 @@
+require("dotenv").config();
+
 const express = require("express");
 const app = express();
-const cors = require('cors');
+const cors = require("cors");
 
 const { connectMongoDb } = require("./connection/connection");
 const userRouter = require("./routes/user");
 const staticRouter = require("./routes/staticRouter");
-const dns = require('node:dns');
-const os = require('node:os');
+const dns = require("node:dns");
+const os = require("node:os");
 
 const { logReqRes, hadleTokenMiddleware } = require("./middlewares");
 const PORT = process.env.PORT || 8001;
@@ -21,16 +23,17 @@ dns.lookup(os.hostname(), options, (err, addr) => {
 });
 
 // Enable CORS
-app.use(cors({
-  origin: '*', // For production, replace '*' with specific domain like 'http://localhost:3000'
-}));
-
+app.use(
+  cors({
+    origin: "*", // For production, replace '*' with specific domain like 'http://localhost:3000'
+  })
+);
 
 const path = require("path");
 const cookieParser = require("cookie-parser");
 app.use(cookieParser());
 
-connectMongoDb("mongodb://127.0.0.1:27017/cv");
+connectMongoDb(process.env.MONGO_URL);
 // connectMongoDb(
 //   "mongodb+srv://root:root@cluster0.4xulazt.mongodb.net/cv?retryWrites=true&w=majority&appName=Cluster0"
 // );

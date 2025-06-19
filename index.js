@@ -2,16 +2,18 @@ require("dotenv").config();
 
 const express = require("express");
 const app = express();
-const http = require('http')
-const server = http.createServer(app)
+const http = require("http");
+const server = http.createServer(app);
 const cors = require("cors");
 const { Server } = require("socket.io");
 
 const { connectMongoDb, connectSocketIO } = require("./connection/connection");
 const userRouter = require("./routes/user");
+const chatUserRouter = require("./routes/chatuser");
+
 const staticRouter = require("./routes/staticRouter");
 const { logReqRes, hadleTokenMiddleware } = require("./middlewares");
-const PORT = process.env.PORT
+const PORT = process.env.PORT || 8001;
 
 // Enable CORS
 app.use(
@@ -28,9 +30,6 @@ connectMongoDb(process.env.MONGO_URL);
 // connectMongoDb(
 //   "mongodb+srv://root:root@cluster0.4xulazt.mongodb.net/cv?retryWrites=true&w=majority&appName=Cluster0"
 // );
-// Socket 
-const io = new Server(server)
-connectSocketIO(io);
 // logger
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
@@ -43,7 +42,18 @@ app.set("views", path.resolve("./views"));
 // end server side
 
 app.use("/api", userRouter);
+app.use("/api", chatUserRouter);
 app.use("/", staticRouter);
+// Socket
+
+const io = new Server(server, {
+  cors: {
+    origin: "*", // 🔁 Update this to your frontend domain
+    methods: ["GET", "POST"],
+    credentials: true,
+  },
+});
+connectSocketIO(io);
 
 server.listen(PORT, () => {
   console.log(`Server is ruuning on port ${PORT}`);

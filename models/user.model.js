@@ -4,19 +4,23 @@ const userSchema = new mongoose.Schema(
   {
     name: {
       type: String,
+      default: "",
+    },
+    mobile: {
+      type: String,
       require: true,
     },
     description: {
       type: String,
-      require: true,
+      default: "",
     },
     title: {
       type: String,
-      require: true,
+      default: "",
     },
     email: {
       type: String,
-      require: true,
+      default: "",
       unique: true,
     },
     about: {
@@ -137,6 +141,7 @@ const userSchema = new mongoose.Schema(
     },
     language: {
       type: String,
+      default: "",
     },
     hobbies: {
       type: String,

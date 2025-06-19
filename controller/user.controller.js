@@ -1,8 +1,10 @@
 const AddProject = require("../models/addproject.model");
+const ChatUser = require("../models/chatUser.modal");
 const Test = require("../models/test.model");
 const User = require("../models/user.model");
 const { setUser, getUser } = require("../services/auth");
 const multer = require("multer");
+const fs = require("fs");
 const path = require("path");
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
@@ -147,11 +149,14 @@ async function userCreateUser(req, res) {
         .json({ status: true, message: "Please enter valid email address." });
 
     const user = await User.findOne({ email: email });
-    if (user)
+    if (user) {
+      fs.unlink(req.file.path, (err) => {
+        if (err) console.error("File delete error:", err);
+      });
       return res
         .status(200)
         .json({ status: true, message: "Email already registered" });
-
+    }
     const token = await setUser({
       name: name,
       email: email,
@@ -180,11 +185,11 @@ async function getLoginApi(req, res) {
     const project = await AddProject.findOne({ email: email });
 
     // console.log(user);
-        console.log(project);
+    console.log(project);
 
     if (user) {
-      if(project){
-        user.project = project.project
+      if (project) {
+        user.project = project.project;
       }
       return res
         .status(200)
@@ -226,23 +231,19 @@ async function addProject(req, res) {
         .json({ status: false, message: "project field must be an array" });
     }
     const user = await User.findOne({ email: parsedData.email });
-   if (!user) {
-      return res
-        .status(200)
-        .json({
-          status: false,
-          message: "User does not exist.",
-        });
+    if (!user) {
+      return res.status(200).json({
+        status: false,
+        message: "User does not exist.",
+      });
     }
     const project = await AddProject.findOne({ email: parsedData.email });
 
     if (project) {
-      return res
-        .status(200)
-        .json({
-          status: false,
-          message: "Data already exist in the database.",
-        });
+      return res.status(200).json({
+        status: false,
+        message: "Data already exist in the database.",
+      });
     }
     const data = parsedData.project.map((item, index) => {
       if (req.files.length > index) {
@@ -279,6 +280,48 @@ async function addProject(req, res) {
   });
 }
 
+async function onUserCreate(req, res) {
+  const { mobile } = req.body;
+
+  console.log(req.body.mobile);
+  const user = await ChatUser.findOne({ mobile: mobile });
+  console.log("isUser", user);
+
+  if (user) {
+    return res.status(200).json({
+      status: true,
+      message: "mobile no is already exist",
+      value: user,
+    });
+  }
+
+  await ChatUser.create({ mobile: mobile });
+  const users = await ChatUser.findOne({ mobile: mobile });
+
+  return res.status(200).json({
+    status: true,
+    message: "success",
+    value: users,
+  });
+}
+
+async function getChatUsers(req, res) {
+  try {
+    const users = await ChatUser.find({});
+    // console.log(users);
+    if (users) {
+      return res
+        .status(200)
+        .json({ status: true, message: "Success", value: users });
+    }
+    return res
+      .status(200)
+      .json({ status: false, message: "No user exist.", value: [] });
+  } catch (err) {
+    return res.status(400).json({ status: true, message: err.message });
+  }
+}
+
 module.exports = {
   userCreate,
   getLogin,
@@ -286,4 +329,6 @@ module.exports = {
   userCreateUser,
   getLoginApi,
   addProject,
+  onUserCreate,
+  getChatUsers,
 };

@@ -16,42 +16,47 @@ async function connectMongoDb(params) {
       console.log("Connection is failed");
     });
 }
-const users = {};
+
+const connectedUsers = new Map();
 
 async function connectSocketIO(io) {
   io.on("connection", (socket) => {
-    console.log("a user connected", socket.id);
-    // Save user ID with socket
-    // socket.on("register", (socketParams) => {
-    //   users[socketParams] = socketParams;
-    //   console.log(`User registered: ${socketParams}`);
-    // });
+    const userId = socket.handshake.query.userId;
+    console.log(`User connected: ${userId} (Socket ID: ${socket.id})`);
+
+    if (userId) {
+      connectedUsers.set(userId, socket.id);
+    }
     socket.on("user-message", (msg) => {
       console.log("user-message", msg);
-          const socketParamsFrom = `message${msg.clientFrom}-${msg.clientTo}`;
-          const socketParamsTo = `message${msg.clientTo}-${msg.clientFrom}`;
+      const socketParamsFrom = `message${msg.clientFrom}-${msg.clientTo}`;
+      const socketParamsTo = `message${msg.clientTo}-${msg.clientFrom}`;
 
       io.emit(socketParamsFrom, msg);
       io.emit(socketParamsTo, msg);
-
-      // io.emit(socketParamsTo, msg);
-
-      //   callback({
-      //     status: 'ok'
-      //   });
     });
-    socket.on("getUsers", async()=> {
-      axios.get("http://192.168.101.181:8001/api/chatusers")
-      .then((response) => {
-        console.log("GET response:", response.data);
-        io.emit("users", response.data)
-      })
-      .catch((error) => {
-        console.error("GET error:", error);
-      })
-    })
+    socket.on("getUsers", async () => {
+      axios
+        .get("http://192.168.101.181:8001/api/chatusers")
+        .then((response) => {
+          const usersWithOnlineStatus = response.data.value.map((user) => ({
+            ...user,
+            online: connectedUsers.has(user.mobile), // or user._id / user.id based on your backend
+          }));
+
+          io.emit("users", usersWithOnlineStatus);
+        })
+        .catch((error) => {
+          console.error("GET error:", error);
+        });
+    });
     socket.on("disconnect", () => {
-      console.log("user disconnected");
+      console.log(`User disconnected: ${userId}`);
+      // Remove disconnected user
+      if (userId) {
+        connectedUsers.delete(userId);
+        io.emit("online-users", Array.from(connectedUsers.keys())); // 🔁 update others
+      }
     });
   });
 }

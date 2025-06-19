@@ -164,7 +164,7 @@ async function userCreateUser(req, res) {
     });
     console.log("token", token);
     res.cookie("token", token.toString());
-
+    parsedData.token = token
     // parsedData["profile"] = req.file;
     await User.create(parsedData);
 
@@ -285,7 +285,6 @@ async function onUserCreate(req, res) {
 
   console.log(req.body.mobile);
   const user = await ChatUser.findOne({ mobile: mobile });
-  console.log("isUser", user);
 
   if (user) {
     return res.status(200).json({
@@ -308,7 +307,6 @@ async function onUserCreate(req, res) {
 async function getChatUsers(req, res) {
   try {
     const users = await ChatUser.find({});
-    // console.log(users);
     if (users) {
       return res
         .status(200)

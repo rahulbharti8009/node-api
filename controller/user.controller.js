@@ -150,9 +150,9 @@ async function userCreateUser(req, res) {
 
     const user = await User.findOne({ email: email });
     if (user) {
-      // fs.unlink(req.file.path, (err) => {
-      //   if (err) console.error("File delete error:", err);
-      // });
+      fs.unlink(req.file.path, (err) => {
+        if (err) console.error("File delete error:", err);
+      });
       return res
         .status(200)
         .json({ status: true, message: "Email already registered" });

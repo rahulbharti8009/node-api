@@ -412,7 +412,8 @@
 1749544506827 ::1: GET /api/user/r@gmail.com
 1749545677075 ::1: GET /api/user/r@gmail.com
 1749545711161 ::1: POST /api/signup
-<<<<<<< HEAD
+ HEAD
+ HEAD
 1749548280255 ::1: POST /api/signup
 1749548288624 ::1: POST /api/signup
 1749550087815 ::1: POST /api/signup
@@ -485,6 +486,8 @@
 1750513765498 ::1: GET /socket.io/
 1750513766498 ::1: GET /socket.io/
 =======
+=======
+>>>>>>> 17e5dc4a9e6bd4cf86be361215e0f13dc2962eb2
 1749551095097 ::1: GET /api/user/r@gmail.com
 1749551122247 ::1: POST /api/signup
 1749554759380 ::1: POST /api/login
@@ -6897,6 +6900,7 @@
 1750337860170 ::ffff:192.168.101.181: GET /api/user/resume
 1750337869413 ::ffff:192.168.101.181: GET /api/user/rahul@gmail.com
 1750337869444 ::ffff:192.168.101.181: GET /api/user/rahul@gmail.com
+ HEAD
 1750491287674 ::1: GET /api/user/rahul@gmail.com
 1750511398318 ::1: POST /api/signup
 1750511527684 ::1: POST /api/signup
@@ -6915,3 +6919,5 @@
 1750513562282 ::1: POST /api/signup
 1750513606376 ::1: POST /api/signup
 >>>>>>> socket
+=======
+>>>>>>> 17e5dc4a9e6bd4cf86be361215e0f13dc2962eb2

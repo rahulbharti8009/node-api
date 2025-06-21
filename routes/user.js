@@ -15,7 +15,7 @@ const router = express.Router(); // storage config
 // router.post('/signup', userCreate)
 // router.post('/login',getLogin)
 // router.get('/',getTest)
-router.get('/user/:email',getLoginApi);
+router.get('/user/:email',getLoginApi)
 router.post('/signup', userCreateUser);
 router.post('/addproject', addProject);
 

@@ -1,0 +1,84 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Document</title>
+</head>
+<body>
+    <h1>Hello Rahul</h1>
+    <input type="text" id="userid" placeholder="Enter User id"/>
+    <input type="text" id="userid2" placeholder="Enter User id2"/>
+
+   <input type="text" id="message" placeholder="Enter Message"/>
+   <button id="sendBtn">Send</button>
+   <label id="show"></label>
+
+    <script src="/socket.io/socket.io.js"></script>
+    <script>
+    const socket = io();
+    const userid = document.getElementById('userid')
+    const userid2 = document.getElementById('userid2')
+        console.log('message')
+        socket.on('connect', () => {
+            console.log('Connected with socket ID:', socket.id);
+            socket.emit('register', 2);
+            });
+        socket.on('message', (message) => {
+        console.log(`message userid.value ${userid.value}` , `message.userid ${message.from}`)
+        console.log('message'+userid.value+userid2.value)
+        const chat = document.getElementById("show")
+
+// Create a new message div
+const msgDiv = document.createElement("div");
+msgDiv.innerText = `${message.from}: ${message.message}`;
+
+// Style the message to align right
+msgDiv.style.textAlign = userid.value == message.from ? "right" : "left"; // for text alignment
+msgDiv.style.margin = "4px";
+msgDiv.style.padding = "8px";
+msgDiv.style.background = "#DCF8C6"; // WhatsApp-like message bubble
+msgDiv.style.borderRadius = "10px";
+
+// Optional: make it inline-block so it doesn't stretch full width
+msgDiv.style.display = "inline-block";
+msgDiv.style.maxWidth = "80%";
+
+// Wrap message in a container to right-align it
+const wrapper = document.createElement("div");
+wrapper.style.display = "flex";
+wrapper.style.justifyContent = userid.value == message.from?  "flex-end" : "flex-start";
+wrapper.appendChild(msgDiv);
+
+// Append to chat container
+chat.appendChild(wrapper);
+        //    chat.style.justifyContent = "flex-end";
+        //    chat.innerText += `\n${message.userid}:${message.message}`;
+        })
+        // form
+    const sendBtn = document.getElementById('sendBtn')
+    const messageInput = document.getElementById('message')
+    const useridInput = document.getElementById('userid')
+    const useridInput2 = document.getElementById('userid2')
+
+
+    sendBtn.addEventListener('click' , e => {
+        const message = {
+            "message": messageInput.value, 
+            "from": useridInput.value, 
+            "to": useridInput2.value, 
+        }
+        console.log("client ", JSON.stringify(message)) 
+        socket.timeout(10000).emit('user-message', message, (err, response) => {
+            if (err) {
+                console.log(err.message); // 'error'
+                // the server did not acknowledge the event in the given delay
+            } else {
+                console.log(response.status); // 'ok'
+            }
+            })
+        document.getElementById("message").value = ''
+    })
+    </script>
+</body>
+</html>

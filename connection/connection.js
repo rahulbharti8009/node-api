@@ -37,7 +37,7 @@ async function connectSocketIO(io) {
     });
     socket.on("getUsers", async () => {
       axios
-        .get("http://192.168.101.181:8001/api/chatusers")
+        .get("https://reinvented-raspy-clam.glitch.me/api/chatusers")
         .then((response) => {
           const usersWithOnlineStatus = response.data.value.map((user) => ({
             ...user,

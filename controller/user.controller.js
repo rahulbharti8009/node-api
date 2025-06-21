@@ -126,7 +126,7 @@ async function userCreateUser(req, res) {
     try {
       parsedData = JSON.parse(req.body.data);
     } catch (e) {
-      return res.status(200).json({ message: "Invalid JSON in data field" });
+      return res.status(200).json({ message: e.message });
     }
     parsedData.profile = {
       filename: req.file.filename,
@@ -150,9 +150,9 @@ async function userCreateUser(req, res) {
 
     const user = await User.findOne({ email: email });
     if (user) {
-      fs.unlink(req.file.path, (err) => {
-        if (err) console.error("File delete error:", err);
-      });
+      // fs.unlink(req.file.path, (err) => {
+      //   if (err) console.error("File delete error:", err);
+      // });
       return res
         .status(200)
         .json({ status: true, message: "Email already registered" });

@@ -7,13 +7,14 @@ const server = http.createServer(app);
 const cors = require("cors");
 const { Server } = require("socket.io");
 
+
 const { connectMongoDb, connectSocketIO } = require("./connection/connection");
 const userRouter = require("./routes/user");
 const chatUserRouter = require("./routes/chatuser");
 
 const staticRouter = require("./routes/staticRouter");
 const { logReqRes, hadleTokenMiddleware } = require("./middlewares");
-const PORT = process.env.PORT || 8001;
+const PORT = process.env.PORT;
 
 // Enable CORS
 app.use(

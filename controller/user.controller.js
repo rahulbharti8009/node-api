@@ -126,7 +126,7 @@ async function userCreateUser(req, res) {
     try {
       parsedData = JSON.parse(req.body.data);
     } catch (e) {
-      return res.status(200).json({ message: "Invalid JSON in data field" });
+      return res.status(200).json({ message: e.message });
     }
     parsedData.profile = {
       filename: req.file.filename,

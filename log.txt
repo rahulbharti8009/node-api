@@ -412,6 +412,82 @@
 1749544506827 ::1: GET /api/user/r@gmail.com
 1749545677075 ::1: GET /api/user/r@gmail.com
 1749545711161 ::1: POST /api/signup
+ HEAD
+ HEAD
+1749548280255 ::1: POST /api/signup
+1749548288624 ::1: POST /api/signup
+1749550087815 ::1: POST /api/signup
+1749550578437 ::1: POST /api/signup
+1749550694023 ::1: POST /api/signup
+1749550728036 ::1: GET /api/user/r@gmail.com
+1749550761257 ::1: GET /api/user/r@gmail.com
+1750492849617 ::1: GET /socket.io/
+1750492850617 ::1: GET /socket.io/
+1750492852616 ::1: GET /socket.io/
+1750492853615 ::1: GET /socket.io/
+1750492857615 ::1: GET /socket.io/
+1750492857616 ::1: GET /socket.io/
+1750492863615 ::1: GET /socket.io/
+1750492863616 ::1: GET /socket.io/
+1750492869612 ::1: GET /socket.io/
+1750492869612 ::1: GET /socket.io/
+1750492875616 ::1: GET /socket.io/
+1750492875617 ::1: GET /socket.io/
+1750492881615 ::1: GET /socket.io/
+1750492881615 ::1: GET /socket.io/
+1750492887615 ::1: GET /socket.io/
+1750492887615 ::1: GET /socket.io/
+1750492893615 ::1: GET /socket.io/
+1750492893616 ::1: GET /socket.io/
+1750492899615 ::1: GET /socket.io/
+1750492899615 ::1: GET /socket.io/
+1750492905615 ::1: GET /socket.io/
+1750492905616 ::1: GET /socket.io/
+1750492911612 ::1: GET /socket.io/
+1750492911613 ::1: GET /socket.io/
+1750492917616 ::1: GET /socket.io/
+1750492917617 ::1: GET /socket.io/
+1750492923612 ::1: GET /socket.io/
+1750492923613 ::1: GET /socket.io/
+1750492929610 ::1: GET /socket.io/
+1750492929612 ::1: GET /socket.io/
+1750492935618 ::1: GET /socket.io/
+1750492935618 ::1: GET /socket.io/
+1750492941618 ::1: GET /socket.io/
+1750492941620 ::1: GET /socket.io/
+1750492947612 ::1: GET /socket.io/
+1750492947613 ::1: GET /socket.io/
+1750492953618 ::1: GET /socket.io/
+1750492953618 ::1: GET /socket.io/
+1750492959617 ::1: GET /socket.io/
+1750492959618 ::1: GET /socket.io/
+1750492965614 ::1: GET /socket.io/
+1750492965615 ::1: GET /socket.io/
+1750492971615 ::1: GET /socket.io/
+1750492971618 ::1: GET /socket.io/
+1750492977696 ::1: GET /socket.io/
+1750492977697 ::1: GET /socket.io/
+1750492983695 ::1: GET /socket.io/
+1750492983696 ::1: GET /socket.io/
+1750492989694 ::1: GET /socket.io/
+1750492989694 ::1: GET /socket.io/
+1750492995694 ::1: GET /socket.io/
+1750492995697 ::1: GET /socket.io/
+1750493001695 ::1: GET /socket.io/
+1750493001696 ::1: GET /socket.io/
+1750513711505 ::1: GET /socket.io/
+1750513712498 ::1: GET /socket.io/
+1750513717498 ::1: GET /socket.io/
+1750513718499 ::1: GET /socket.io/
+1750513723499 ::1: GET /socket.io/
+1750513724496 ::1: GET /socket.io/
+1750513759497 ::1: GET /socket.io/
+1750513760498 ::1: GET /socket.io/
+1750513765498 ::1: GET /socket.io/
+1750513766498 ::1: GET /socket.io/
+=======
+=======
+>>>>>>> 17e5dc4a9e6bd4cf86be361215e0f13dc2962eb2
 1749551095097 ::1: GET /api/user/r@gmail.com
 1749551122247 ::1: POST /api/signup
 1749554759380 ::1: POST /api/login
@@ -6824,6 +6900,7 @@
 1750337860170 ::ffff:192.168.101.181: GET /api/user/resume
 1750337869413 ::ffff:192.168.101.181: GET /api/user/rahul@gmail.com
 1750337869444 ::ffff:192.168.101.181: GET /api/user/rahul@gmail.com
+<<<<<<< HEAD
 1750396513108 ::1: POST /api/signup
 1750399544614 ::1: POST /api/signup
 1750402672611 ::1: POST /api/signup
@@ -6834,3 +6911,26 @@
 1750411271940 ::ffff:192.168.101.181: GET /api/chatusers
 1750411272000 ::ffff:192.168.101.181: GET /api/chatusers
 1750411364163 ::ffff:192.168.101.181: GET /api/chatusers
+=======
+ HEAD
+1750491287674 ::1: GET /api/user/rahul@gmail.com
+1750511398318 ::1: POST /api/signup
+1750511527684 ::1: POST /api/signup
+1750511624106 ::1: POST /api/signup
+1750511625562 ::1: POST /api/signup
+1750511631894 ::1: POST /api/signup
+1750511632997 ::1: POST /api/signup
+1750511676250 ::1: POST /api/signup
+1750511677582 ::1: POST /api/signup
+1750511927569 ::1: POST /api/signup
+1750511962652 ::1: POST /api/signup
+1750512243126 ::1: POST /api/signup
+1750512265919 ::1: POST /api/signup
+1750512380156 ::1: POST /api/signup
+1750512412700 ::1: POST /api/signup
+1750513562282 ::1: POST /api/signup
+1750513606376 ::1: POST /api/signup
+>>>>>>> socket
+=======
+>>>>>>> 17e5dc4a9e6bd4cf86be361215e0f13dc2962eb2
+>>>>>>> 7ab40227c96c126c71582f7257dadce8e930bdfd

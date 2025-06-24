@@ -14,7 +14,7 @@ const chatUserRouter = require("./routes/chatuser");
 
 const staticRouter = require("./routes/staticRouter");
 const { logReqRes, hadleTokenMiddleware } = require("./middlewares");
-const PORT = process.env.PORT;
+const PORT = process.env.PORT ;
 
 // Enable CORS
 app.use(

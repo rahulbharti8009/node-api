@@ -281,7 +281,7 @@ async function addProject(req, res) {
 }
 
 async function onUserCreate(req, res) {
-  const { mobile } = req.body;
+  const { mobile , name} = req.body;
 
   console.log(req.body.mobile);
   const user = await ChatUser.findOne({ mobile: mobile });
@@ -294,7 +294,7 @@ async function onUserCreate(req, res) {
     });
   }
 
-  await ChatUser.create({ mobile: mobile });
+  await ChatUser.create({ mobile: mobile, name : name });
   const users = await ChatUser.findOne({ mobile: mobile });
 
   return res.status(200).json({

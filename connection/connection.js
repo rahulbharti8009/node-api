@@ -37,8 +37,11 @@ async function connectSocketIO(io) {
     });
     socket.on("getUsers", async () => {
       axios
-        .get("https://reinvented-raspy-clam.glitch.me/api/chatusers")
+        // .get("https://reinvented-raspy-clam.glitch.me/api/chatusers")
+        .get(`${process.env.BASE_URL}api/chatusers`)
         .then((response) => {
+                console.log("getUsers");
+
           const usersWithOnlineStatus = response.data.value.map((user) => ({
             ...user,
             online: connectedUsers.has(user.mobile), // or user._id / user.id based on your backend
@@ -55,7 +58,7 @@ async function connectSocketIO(io) {
       // Remove disconnected user
       if (userId) {
         connectedUsers.delete(userId);
-        io.emit("online-users", Array.from(connectedUsers.keys())); // 🔁 update others
+        io.emit("getUsers"); // 🔁 update others
       }
     });
   });

@@ -31,9 +31,12 @@ async function connectSocketIO(io) {
       console.log("user-message", msg);
       const socketParamsFrom = `message${msg.clientFrom}-${msg.clientTo}`;
       const socketParamsTo = `message${msg.clientTo}-${msg.clientFrom}`;
-
-      io.emit(socketParamsFrom, msg);
-      io.emit(socketParamsTo, msg);
+      if (msg.clientTo == msg.clientFrom) {
+        io.emit(socketParamsFrom, msg);
+      } else {
+        io.emit(socketParamsFrom, msg);
+        io.emit(socketParamsTo, msg);
+      }
     });
     socket.on("getUsers", async () => {
       axios

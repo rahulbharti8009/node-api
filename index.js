@@ -44,7 +44,10 @@ app.set("views", path.resolve("./views"));
 
 app.use("/api", userRouter);
 app.use("/api", chatUserRouter);
-app.use("/", staticRouter);
+app.get('/', (req, res) => {
+   res.json({message : `${process.pid}`});
+ });
+// app.use("/", staticRouter);
 // Socket
 
 const io = new Server(server, {

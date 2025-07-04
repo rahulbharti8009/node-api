@@ -25,7 +25,7 @@ async function connectSocketIO(io) {
     console.log(`User connected: ${userId} (Socket ID: ${socket.id})`);
 
     if (userId) {
-      connectedUsers.set(userId, socket.id);
+      connectedUsers.set(userId, userId);
     }
     socket.on("user-message", (msg) => {
       console.log("user-message", msg);
@@ -40,7 +40,6 @@ async function connectSocketIO(io) {
     });
     socket.on("getUsers", async () => {
       axios
-        // .get("https://reinvented-raspy-clam.glitch.me/api/chatusers")
         .get(`${process.env.BASE_URL}api/chatusers`)
         .then((response) => {
                 console.log("getUsers");

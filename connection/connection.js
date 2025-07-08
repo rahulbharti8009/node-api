@@ -27,6 +27,7 @@ async function connectSocketIO(io) {
     if (userId) {
       connectedUsers.set(userId, socket.id);
     }
+    // chat onw to one
     socket.on("user-message", (msg) => {
       console.log("user-message", msg);
       const socketParamsFrom = `message${msg.clientFrom}-${msg.clientTo}`;

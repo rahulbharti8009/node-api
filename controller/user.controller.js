@@ -6,6 +6,7 @@ const { setUser, getUser } = require("../services/auth");
 const multer = require("multer");
 const fs = require("fs");
 const path = require("path");
+const AddChatGroupt = require("../models/AddChatGroup.model");
 const storage = multer.diskStorage({
   destination: function (req, file, cb) {
     cb(null, "uploads"); // relative path without slash
@@ -320,6 +321,70 @@ async function getChatUsers(req, res) {
   }
 }
 
+
+async function addChatGroups(req, res) {
+  const { name ,admin , group_user} = req.body;
+
+if(!name){
+  return res.status(200).json({
+    status: true,
+    message: "Please enter name.",
+  });
+}
+
+
+if(!admin){
+  return res.status(200).json({
+    status: true,
+    message: "Please enter admin name.",
+  });
+}
+
+if(!group_user){
+  return res.status(200).json({
+    status: true,
+    message: "Please enter at least one group user.",
+  });
+}
+
+ const isGroupExist =  await AddChatGroupt.findOne({name: name})
+ if(isGroupExist){
+  return res.status(200).json({
+    status: true,
+    message: "The Group name is already exist in the datanbase.",
+  });
+ }
+ await AddChatGroupt.create({name : name,admin: admin, group_user: group_user})
+ return res.status(200).json({
+  status: true,
+  message: "success",
+});
+}
+
+async function getChatGroups(req, res) {
+    const {name} = req.body
+  const groups =  await AddChatGroupt.find({})
+
+// Check if any group contains a user with name "Rahul"
+const userExists = groups.filter(group =>
+  group.group_user.some(user => user.name === name)
+);
+  if(userExists){
+    return res.status(200).json({
+      status: true,
+      message: "Success.",
+      value: userExists
+    });
+   }
+
+   return res.status(200).json({
+    status: true,
+    message: "No group is available.",
+    value: []
+  });
+
+}
+
 module.exports = {
   userCreate,
   getLogin,
@@ -329,4 +394,6 @@ module.exports = {
   addProject,
   onUserCreate,
   getChatUsers,
+  addChatGroups,
+  getChatGroups
 };

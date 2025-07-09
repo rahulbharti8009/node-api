@@ -33,14 +33,44 @@ async function connectSocketIO(io) {
       const socketParamsFrom = `message${msg.clientFrom}-${msg.clientTo}`;
       const socketParamsTo = `message${msg.clientTo}-${msg.clientFrom}`;
       if (msg.clientTo == msg.clientFrom) {
+        console.log("if ", socketParamsFrom)
         io.emit(socketParamsFrom, msg);
       } else {
+        console.log("else to", socketParamsTo)
+        console.log("else from ", socketParamsFrom)
+
         io.emit(socketParamsFrom, msg);
         io.emit(socketParamsTo, msg);
       }
     });
-
-  // group chat
+    // group chat
+     // chat one to one
+     socket.on("group", (mobile) => {
+      console.log("group", mobile);
+      let data = JSON.stringify({
+        "mobile": mobile
+      });
+      
+      let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: `${process.env.BASE_URL}api/getchatgroups`,
+        headers: { 
+          'Content-Type': 'application/json'
+        },
+        data : data
+      };
+      
+      axios.request(config)
+      .then((response) => {
+        console.log("group", response.data);
+        io.emit(`group${mobile}`,  response.data.value)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    });
+  // users chat
     socket.on("getUsers", async () => {
       axios
         .get(`${process.env.BASE_URL}api/chatusers`)

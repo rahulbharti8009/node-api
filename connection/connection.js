@@ -44,6 +44,32 @@ async function connectSocketIO(io) {
       }
     });
     // group chat
+    socket.on("addgroup", (data)=> {
+    console.log("addgroup", data)
+    const {group_user} = data
+    console.log("addgroup", group_user)
+
+      let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: `${process.env.BASE_URL}api/addchatgroups`,
+        headers: { 
+          'Content-Type': 'application/json'
+        },
+        data : data
+      };
+      
+      axios.request(config)
+      .then((response) => {
+        for(let i = 0; i < group_user.length; i++){
+          console.log("group res",group_user[i].mobile);
+          io.emit(`group${group_user[i].mobile}`,  response.data.value)
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    }); // ======= end add group
      // chat one to one
      socket.on("group", (mobile) => {
       console.log("group", mobile);
@@ -63,7 +89,7 @@ async function connectSocketIO(io) {
       
       axios.request(config)
       .then((response) => {
-        console.log("group", response.data);
+        console.log("group res", response.data);
         io.emit(`group${mobile}`,  response.data.value)
       })
       .catch((error) => {

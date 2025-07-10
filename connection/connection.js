@@ -27,6 +27,7 @@ async function connectSocketIO(io) {
     if (userId) {
       connectedUsers.set(userId, userId);
     }
+    // chat one to one
     socket.on("user-message", (msg) => {
       console.log("user-message", msg);
       const socketParamsFrom = `message${msg.clientFrom}-${msg.clientTo}`;
@@ -38,6 +39,8 @@ async function connectSocketIO(io) {
         io.emit(socketParamsTo, msg);
       }
     });
+
+  // group chat
     socket.on("getUsers", async () => {
       axios
         .get(`${process.env.BASE_URL}api/chatusers`)

@@ -10,7 +10,7 @@ const addChatGroups = new mongoose.Schema({
     },
     group_user : {
         type : [{
-            name:{
+            mobile:{
                 type: String, default: ""
             }
         }]

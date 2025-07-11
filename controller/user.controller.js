@@ -347,7 +347,7 @@ if(!group_user){
   });
 }
 
- const isGroupExist =  await AddChatGroupt.findOne({name: name})
+ const isGroupExist =  await AddChatGroupt.findOne({name: name, admin: admin})
  if(isGroupExist){
   return res.status(200).json({
     status: true,
@@ -362,25 +362,25 @@ if(!group_user){
 }
 
 async function getChatGroups(req, res) {
-    const {name} = req.body
-  const groups =  await AddChatGroupt.find({})
+    const {mobile} = req.body
+    const groups = await AddChatGroupt.find({
+      group_user: {
+        $elemMatch: { mobile: mobile }
+      }
+    });  
 
-// Check if any group contains a user with name "Rahul"
-const userExists = groups.filter(group =>
-  group.group_user.some(user => user.name === name)
-);
-  if(userExists){
+  if(!groups){
     return res.status(200).json({
       status: true,
-      message: "Success.",
-      value: userExists
+      message: "No group is available.",
+      value: []
     });
    }
-
+   
    return res.status(200).json({
     status: true,
-    message: "No group is available.",
-    value: []
+    message: "available.",
+    value: groups
   });
 
 }

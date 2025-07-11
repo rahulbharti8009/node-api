@@ -34,7 +34,7 @@ connectMongoDb(process.env.MONGO_URL);
 // logger
 app.use(express.json());
 app.use(express.urlencoded({ extended: false }));
-app.use(logReqRes("log.txt"));
+// app.use(logReqRes("log.txt"));
 app.use(hadleTokenMiddleware());
 
 // server sode rendering

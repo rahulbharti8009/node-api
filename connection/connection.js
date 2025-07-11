@@ -23,7 +23,7 @@ async function connectSocketIO(io) {
   io.on("connection", (socket) => {
     const userId = socket.handshake.query.userId;
     console.log(`User connected: ${userId} (Socket ID: ${socket.id})`);
-
+// save mobile number
     if (userId) {
       connectedUsers.set(userId, userId);
     }
@@ -33,14 +33,71 @@ async function connectSocketIO(io) {
       const socketParamsFrom = `message${msg.clientFrom}-${msg.clientTo}`;
       const socketParamsTo = `message${msg.clientTo}-${msg.clientFrom}`;
       if (msg.clientTo == msg.clientFrom) {
+        console.log("if ", socketParamsFrom)
         io.emit(socketParamsFrom, msg);
       } else {
+        console.log("else to", socketParamsTo)
+        console.log("else from ", socketParamsFrom)
+
         io.emit(socketParamsFrom, msg);
         io.emit(socketParamsTo, msg);
       }
     });
+    // group chat
+    socket.on("addgroup", (data)=> {
+    console.log("addgroup", data)
+    const {group_user} = data
+    console.log("addgroup", group_user)
 
-  // group chat
+      let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: `${process.env.BASE_URL}api/addchatgroups`,
+        headers: { 
+          'Content-Type': 'application/json'
+        },
+        data : data
+      };
+      
+      axios.request(config)
+      .then((response) => {
+        for(let i = 0; i < group_user.length; i++){
+                 const mobile = group_user[i].mobile;
+        console.log("group res", mobile);
+        io.emit(`getGroupApi${mobile}`, mobile); 
+        }
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    }); // ======= end add group
+     // chat one to one
+     socket.on("group", (mobile) => {
+      console.log("group", mobile);
+      let data = JSON.stringify({
+        "mobile": mobile
+      });
+      
+      let config = {
+        method: 'post',
+        maxBodyLength: Infinity,
+        url: `${process.env.BASE_URL}api/getchatgroups`,
+        headers: { 
+          'Content-Type': 'application/json'
+        },
+        data : data
+      };
+      
+      axios.request(config)
+      .then((response) => {
+        console.log("group res", response.data);
+        io.emit(`group${mobile}`,  response.data.value)
+      })
+      .catch((error) => {
+        console.log(error);
+      });
+    });
+  // users chat
     socket.on("getUsers", async () => {
       axios
         .get(`${process.env.BASE_URL}api/chatusers`)
@@ -58,6 +115,7 @@ async function connectSocketIO(io) {
           console.error("GET error:", error);
         });
     });
+    // disconnected
     socket.on("disconnect", () => {
       console.log(`User disconnected: ${userId}`);
       // Remove disconnected user
@@ -66,6 +124,23 @@ async function connectSocketIO(io) {
         io.emit("getUsers"); // 🔁 update others
       }
     });
+    // calling
+    socket.on("join", room => {
+    socket.join(room);
+    socket.to(room).emit("new-user", socket.id);
+  });
+
+  socket.on("offer", ({ offer, to }) => {
+    socket.to(to).emit("offer", { offer, from: socket.id });
+  });
+
+  socket.on("answer", ({ answer, to }) => {
+    socket.to(to).emit("answer", { answer, from: socket.id });
+  });
+
+  socket.on("ice-candidate", ({ candidate, to }) => {
+    socket.to(to).emit("ice-candidate", { candidate, from: socket.id });
+  });
   });
 }
 

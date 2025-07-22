@@ -6,6 +6,16 @@ const http = require("http");
 const server = http.createServer(app);
 const cors = require("cors");
 const { Server } = require("socket.io");
+// firebase
+const bodyParser = require('body-parser');
+const admin = require('firebase-admin');
+const serviceAccount = require('./serviceAccountKey.json'); // 🔐
+
+admin.initializeApp({
+  credential: admin.credential.cert(serviceAccount),
+});
+app.use(bodyParser.json());
+
 
 
 const { connectMongoDb, connectSocketIO } = require("./connection/connection");
@@ -58,6 +68,28 @@ const io = new Server(server, {
   },
 });
 connectSocketIO(io);
+
+// firebase
+app.post('/send-notification', async (req, res) => {
+  const { token, title, body } = req.body;
+
+  const message = {
+    token,
+    notification: {
+      title,
+      body,
+    },
+  };
+
+  try {
+    const response = await admin.messaging().send(message);
+    console.log('✅ Notification sent:', response);
+    res.status(200).send({ success: true });
+  } catch (error) {
+    console.error('❌ Error sending notification:', error);
+    res.status(500).send({ success: false, error: error.message });
+  }
+});
 
 server.listen(PORT, () => {
   console.log(`Server is ruuning on port ${PORT}`);

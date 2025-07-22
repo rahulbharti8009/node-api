@@ -124,23 +124,6 @@ async function connectSocketIO(io) {
         io.emit("getUsers"); // 🔁 update others
       }
     });
-    // calling
-    socket.on("join", room => {
-    socket.join(room);
-    socket.to(room).emit("new-user", socket.id);
-  });
-
-  socket.on("offer", ({ offer, to }) => {
-    socket.to(to).emit("offer", { offer, from: socket.id });
-  });
-
-  socket.on("answer", ({ answer, to }) => {
-    socket.to(to).emit("answer", { answer, from: socket.id });
-  });
-
-  socket.on("ice-candidate", ({ candidate, to }) => {
-    socket.to(to).emit("ice-candidate", { candidate, from: socket.id });
-  });
   });
 }
 

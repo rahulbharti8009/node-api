@@ -28,7 +28,7 @@ const PORT = process.env.PORT ;
 
 // Enable CORS
 app.use(
-  cors({
+  cors({  
     origin: "*", // For production, replace '*' with specific domain like 'http://localhost:3000'
   })
 );
